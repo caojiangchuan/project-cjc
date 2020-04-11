@@ -1,0 +1,14 @@
+本项目为前端 服务端 数据库全栈项目
+服务端说明：
+  在config中引入orm sequlize插件（并配置相对应mysql2）
+  model模型中引入config配置文件，定义相关数据库表
+  serve中引入model表单进行数据库操作，增删改等
+  controller中引入serve中对数据库处理的回调数据，获取。在进行一个respose状态数据处理返回路由router
+  
+  
+数据库配置根据config中自行配置
+
+前端vue
+  
+  
+  
