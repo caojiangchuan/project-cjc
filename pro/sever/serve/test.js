@@ -10,16 +10,11 @@ async function test() {
     });
 }
 
-// 查询全部数据接口
-
-// 接口对应所有状态数据接口
-
-// 删除接口
-
-// 删除状态
-
-//
+async function find() {
+    return model.test.findAll();
+}
 
 module.exports = {
-    test
+    test,
+    find
 };

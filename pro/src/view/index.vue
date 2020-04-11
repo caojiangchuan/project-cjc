@@ -11,12 +11,13 @@ export default {
         return {
         };
     },
-
     mounted() {
-        this.$api.get('/test', {
-        }, response => {
-            console.log(response);
+        this.$api.find.then(res => {
+            console.log(res);
+        }).catch(e => {
+            console.lpg(e);
         });
+
     }
 }
 </script>

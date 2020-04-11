@@ -6,6 +6,7 @@ router.get('/', async (ctx, next) => {
         title: 'Hello Koa 2!'
     });
 });
-router.get('/test', dataControl.test);
+router.post('/test', dataControl.test);
+router.post('/find', dataControl.find);
 
 module.exports = router;
