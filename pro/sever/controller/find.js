@@ -1,12 +1,12 @@
 const mockApiModel = require('../serve/test');
 
 const test = async(ctx, next) => {
-    ctx.body = {
-        code: 200,
-        msg: '成功'
-    };
-    mockApiModel.test();
-
+    mockApiModel.test().then(() => {
+        ctx.body = {
+            code: 200,
+            msg: '成功'
+        };
+    });
 };
 module.exports = {
     test

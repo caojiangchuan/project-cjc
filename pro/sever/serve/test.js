@@ -2,10 +2,10 @@
  * @file
  * @author
  */
-const sql = require('../model/sql');
+const model = require('../model/index');
 
-function test() {
-    sql.test.create({
+async function test() {
+    model.test.create({
         name: '小朋友'
     });
 }

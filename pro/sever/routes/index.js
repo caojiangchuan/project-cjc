@@ -1,6 +1,5 @@
 const router = require('koa-router')();
-const sequelize = require('../config/mysql');
-const dataControl = require('../controller/find');
+const dataControl = require('../controller/index');
 
 router.get('/', async (ctx, next) => {
     await ctx.render('index', {
@@ -8,15 +7,5 @@ router.get('/', async (ctx, next) => {
     });
 });
 router.get('/test', dataControl.test);
-
-router.get('/string', async (ctx, next) => {
-    ctx.body = 'koa2 string';
-});
-
-router.get('/json', async (ctx, next) => {
-    ctx.body = {
-        title: 'koa2 json'
-    };
-});
 
 module.exports = router;
