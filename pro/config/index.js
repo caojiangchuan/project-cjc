@@ -50,13 +50,13 @@ module.exports = {
         // Paths
         assetsRoot: path.resolve(__dirname, '../dist'),
         assetsSubDirectory: 'static',
-        assetsPublicPath: '/',
+        assetsPublicPath: './',
 
         /**
          * Source Maps
          */
 
-        productionSourceMap: true,
+        productionSourceMap: true, // false不生成map文件，代码都是经过压缩加密的，如果运行时报错，输出的错误信息无法准确得知是哪里的代码报错。 而生成的.map后缀的文件
         // https://webpack.js.org/configuration/devtool/#production
         devtool: '#source-map',
 

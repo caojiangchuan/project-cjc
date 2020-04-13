@@ -1,9 +1,15 @@
 import http from '../config/index';
-const find = new Promise((resolve, reject) => {
-    http.post('/find', {name: 'tom', age: 10}, response => {
-        resolve(response);
+import apiUrl from './apiUrl';
+function find(name, age) {
+    return new Promise((resolve, reject) => {
+        http.post(apiUrl.find, {
+            name: name,
+            age: age
+        }, res => {
+            resolve(res);
+        });
     });
-});
+}
 export default {
     find
 }

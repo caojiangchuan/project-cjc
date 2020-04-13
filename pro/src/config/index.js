@@ -1,7 +1,7 @@
 import axios from 'axios';
-
+import qs from 'qs';
 let http = axios.create({
-    baseURL: 'http://localhost:3000/',
+    baseURL: process.env.API,
     // 跨域请求是否携带cooikes
     timeout: 600000,
     withCredentials: false,
@@ -11,14 +11,11 @@ let http = axios.create({
     },
     // 允许在向服务器发送前，修改请求数据(form data数据)
     transformRequest: [function (data) {
-        let newData = '';
-        for (let k in data) {
-            if (data.hasOwnProperty(k) === true) {
-                newData += encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) + '&';
-            }
-
-        }
-        return newData;
+        // `transformRequest` 允许在向服务器发送前，修改请求数据
+        // 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
+        return qs.stringify(data);
+        // 结合create_headers里的内容，在这里又新增一条信息sex=man
+        // 因此network中查看的结果是：name=xiaoming&age=12&sex=man
     }]
 });
 // 请求拦截器
@@ -26,7 +23,7 @@ let http = axios.create({
 //     config => {
 //         // 这里可以自定义一些config 配置, 比如添加token
 //         const token = localStorage.getItem('token');
-//         token && (config.headers.Authorization = 'Bearer ' + token);
+//         token && (config.headers.Authorization = token);
 //         return config;
 //     }, function (error) {
 //         return Promise.reject(error);
@@ -85,7 +82,7 @@ function apiAxios(method, url, params, response) {
         data: method === 'POST' || method === 'PUT' ? params : null,
         params: method === 'GET' || method === 'DELETE' ? params : null
     }).then(function (res) {
-        response(res.data);
+        response(res.data); // response是传入的回调函数
     }).catch(function (err) {
         response(err);
     });

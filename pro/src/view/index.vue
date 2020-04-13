@@ -9,13 +9,20 @@ export default {
     name: 'index',
     data() {
         return {
+            data: {
+                name: 'tom',
+                age: 10
+            }
         };
     },
     mounted() {
-        this.$api.find.then(res => {
+        const {name, age} = this.data;
+        this.$api.find(
+            name, age
+        ).then(res => {
             console.log(res);
         }).catch(e => {
-            console.lpg(e);
+            console.log(e);
         });
 
     }
