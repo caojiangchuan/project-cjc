@@ -1,41 +1,52 @@
-'use strict'
-require('./check-versions')()
+'use strict';
+require('./check-versions')(); // 检查 Node 和 npm 版本
 
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'production'; // 区分环境
 
-const ora = require('ora')
-const rm = require('rimraf')
-const path = require('path')
-const chalk = require('chalk')
-const webpack = require('webpack')
-const config = require('../config')
-const webpackConfig = require('./webpack.prod.conf')
+const ora = require('ora'); // 一个很好看的 loading 插件
+const rm = require('rimraf'); // 以包的形式包装rm -rf命令，用来删除文件和文件夹的，不管文件夹是否为空，都可删除(//删除dist目录)
+const path = require('path'); // 使用 NodeJS 自带的文件路径工具
+const chalk = require('chalk'); // 字体颜色
+const webpack = require('webpack'); // 使用 webpack
+const config = require('../config'); // 获取 config/index.js 的默认配置
+const webpackConfig = require('./webpack.prod.conf'); // 使用 pro 环境的 webpack 配置
 
-const spinner = ora('building for production...')
-spinner.start()
-
+const spinner = ora({
+    color: 'red', // 图标颜色
+    text: '正为生产环境打包，耐心点，不然自动关机。。。' // 打包提示语
+});
+spinner.start();
+// 删除dist目录
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
-  if (err) throw err
-  webpack(webpackConfig, (err, stats) => {
-    spinner.stop()
-    if (err) throw err
-    process.stdout.write(stats.toString({
-      colors: true,
-      modules: false,
-      children: false, // If you are using ts-loader, setting this to true will make TypeScript errors show up during build.
-      chunks: false,
-      chunkModules: false
-    }) + '\n\n')
-
-    if (stats.hasErrors()) {
-      console.log(chalk.red('  Build failed with errors.\n'))
-      process.exit(1)
+    if (err) {
+        throw err
     }
 
-    console.log(chalk.cyan('  Build complete.\n'))
-    console.log(chalk.yellow(
-      '  Tip: built files are meant to be served over an HTTP server.\n' +
-      '  Opening index.html over file:// won\'t work.\n'
-    ))
-  })
-})
+    //  开始 webpack 的编译
+    webpack(webpackConfig, (err, stats) => {
+        // 编译成功的回调函数
+        spinner.stop();
+        if (err) {
+            throw err
+        }
+
+        process.stdout.write(stats.toString({
+                colors: true,
+                modules: false,
+                children: false, // If you are using ts-loader, setting this to true will make TypeScript errors show up during build.
+                chunks: false,
+                chunkModules: false
+            }) + '\n\n');
+
+        if (stats.hasErrors()) {
+            console.log(chalk.red(' 发生错误.\n'));
+            process.exit(1);
+        }
+
+        console.log(chalk.cyan('  打包完成.\n'));
+        console.log(chalk.yellow(
+            '  Tip: built files are meant to be served over an HTTP server.\n' +
+            '  Opening index.html over file:// won\'t work.\n'
+        ));
+    });
+});

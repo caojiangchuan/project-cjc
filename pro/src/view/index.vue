@@ -16,6 +16,7 @@ export default {
         };
     },
     mounted() {
+        console.log(process);
         const {name, age} = this.data;
         this.$api.find(
             name, age
