@@ -45,10 +45,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         }
     },
     plugins: [ // 加载插件
-        new webpack.DefinePlugin({
+        new webpack.DefinePlugin({ // 编译时配置的全局变量
             'process.env': require('../config/dev.env')
         }), // definePlugin 接收字符串插入到代码当中, 所以你需要的话可以写上 JS 的字符串
-        new webpack.HotModuleReplacementPlugin(), // HotModule 插件在页面进行变更的时候只会重回对应的页面模块，不会重绘整个 html 文件
+        new webpack.HotModuleReplacementPlugin(), // HotModule 插件在页面进行变更的时候只会重回对应的页面模块，不会重绘整个 html 文件//热更新插件
         new webpack.NamedModulesPlugin(), // 这个插件的作用是在热加载时直接返回更新文件名
         new webpack.NoEmitOnErrorsPlugin(), // 使用了 NoErrorsPlugin 后页面中的报错不会阻塞，但是会在编译结束后报错
         // https://github.com/ampedandwired/html-webpack-plugin

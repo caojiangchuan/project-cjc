@@ -25,7 +25,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     devtool: config.build.productionSourceMap ? config.build.devtool : false, // 是否使用 #source-map 开发工具，更多信息可以查看 DDFE 往期文章
     output: {
         path: config.build.assetsRoot, // 编译输出目录
-        filename: utils.assetsPath('js/[name].[chunkhash].js'), // 编译输出文件名
+        filename: utils.assetsPath('js/[name].[chunkhash].js'), // 编译输出文件名chunkhash哈希文件
         chunkFilename: utils.assetsPath('js/[id].[chunkhash].js') // 没有指定输出名的文件输出的文件名
     },
     plugins: [ // 使用的插件
@@ -39,7 +39,7 @@ const webpackConfig = merge(baseWebpackConfig, {
                     warnings: false
                 }
             },
-            sourceMap: config.build.productionSourceMap,
+            sourceMap: config.build.productionSourceMap, // 生成sourceMap文件
             parallel: true
         }),
         // extract css into its own file
@@ -68,27 +68,27 @@ const webpackConfig = merge(baseWebpackConfig, {
         // generate dist index.html with correct asset hash for caching.
         // you can customize output by editing /index.html
         // see https://github.com/ampedandwired/html-webpack-plugin
-        new HtmlWebpackPlugin({ // 输入输出的 .html 文件
-            filename: config.build.index,
-            template: 'index.html',
-            inject: true,
-            minify: {
-                removeComments: true,
-                collapseWhitespace: true,
-                removeAttributeQuotes: true
+        new HtmlWebpackPlugin({ // 生成html的插件,引入css文件和js文件
+            filename: config.build.index, // 生成的html的文件名
+            template: 'index.html', // 依据的模板
+            inject: true, // 注入的js文件将会被放在body标签中,当值为'head'时，将被放在head标签中
+            minify: { // 压缩配置
+                removeComments: true, // 删除html中的注释代码
+                collapseWhitespace: true, // 删除html中的空白符
+                removeAttributeQuotes: true // 删除html元素中属性的引号
                 // more options:
                 // https://github.com/kangax/html-minifier#options-quick-reference
             },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-            chunksSortMode: 'dependency'
+            chunksSortMode: 'dependency' // 按dependency的顺序引入
         }),
         // keep module.id stable when vendor modules does not change
         new webpack.HashedModuleIdsPlugin(),
         // enable scope hoisting
         new webpack.optimize.ModuleConcatenationPlugin(),
         // split vendor js into its own file
-        new webpack.optimize.CommonsChunkPlugin({ // 没有指定输出文件名的文件输出的静态文件名
-            name: 'vendor',
+        new webpack.optimize.CommonsChunkPlugin({ // 分离公共js到vendor中
+            name: 'vendor', // vendor的hash值改变 ，缓存失效
             minChunks(module) {
                 // any required modules inside node_modules are extracted to vendor
                 return (
@@ -102,7 +102,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         }),
         // extract webpack runtime and module manifest to its own file in order to
         // prevent vendor hash from being updated whenever app bundle is updated
-        new webpack.optimize.CommonsChunkPlugin({
+        new webpack.optimize.CommonsChunkPlugin({ // 下面主要是将运行时代码提取到单独的manifest文件中，防止其影响vendor.js
             name: 'manifest',
             minChunks: Infinity
         }),
@@ -117,7 +117,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         }),
 
         // copy custom static assets
-        new CopyWebpackPlugin([
+        new CopyWebpackPlugin([ // 复制静态资源,将static文件内的内容复制到指定文件夹
             {
                 from: path.resolve(__dirname, '../static'),
                 to: config.build.assetsSubDirectory,
@@ -139,8 +139,8 @@ if (config.build.productionGzip) {
                 config.build.productionGzipExtensions.join('|') +
                 ')$'
             ),
-            threshold: 10240,
-            minRatio: 0.8
+            threshold: 10240, // 资源文件大于10240B=10kB时会被压缩
+            minRatio: 0.8 // 最小压缩比达到0.8时才会被压缩
         })
     );
 }

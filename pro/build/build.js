@@ -22,14 +22,15 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
         throw err
     }
 
-    //  开始 webpack 的编译
+    //  //在删除完成的回调函数中开始编译
     webpack(webpackConfig, (err, stats) => {
         // 编译成功的回调函数
-        spinner.stop();
+        spinner.stop(); // 停止loading
         if (err) {
             throw err
         }
 
+        // 在编译完成的回调函数中,在终端输出编译的文件
         process.stdout.write(stats.toString({
                 colors: true,
                 modules: false,

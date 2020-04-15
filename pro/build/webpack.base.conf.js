@@ -9,7 +9,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-    context: path.resolve(__dirname, '../'),
+    context: path.resolve(__dirname, '../'), // 基础目录，绝对路径，用于从配置中解析入口起点
     entry: {
         app: './src/main.js'
     }, // 编译文件入口
