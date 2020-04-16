@@ -21,7 +21,7 @@ module.exports = {
             : config.dev.assetsPublicPath
     }, // 正式发布环境下编译输出的发布路径
     resolve: { // 解析
-        extensions: ['.js', '.vue', '.json', '.css'], // 自动补全的扩展名 页面引入时即可不写
+        extensions: ['.js', '.vue', '.json', '.css', '.less'], // 自动补全的扩展名 页面引入时即可不写
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
             '@': resolve('src') // @ 直达某个src下的路径
