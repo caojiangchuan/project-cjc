@@ -1,11 +1,11 @@
 <template>
   <div>
-    welcome
+    <h3><router-link to='/js/sorting'>算法排序</router-link></h3>
+    
   </div>
 </template>
 
 <script>
-import '../css/index';
 export default {
     name: 'index',
     data() {
@@ -19,16 +19,16 @@ export default {
     mounted() {
         console.log(process);
         const {name, age} = this.data;
-        this.$api.find(
-            name, age
-        ).then(res => {
-            console.log(res);
-        }).catch(e => {
-            console.log(e);
-        });
-
+        this.$api
+            .find(name, age)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(e => {
+                console.log(e);
+            });
     }
-}
+};
 </script>
 
 
